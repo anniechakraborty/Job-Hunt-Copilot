@@ -13,6 +13,9 @@ if not api_key:
 
 client = Groq(api_key=api_key)
 
+# Set GROQ_MODEL in .env to switch models without code changes
+MODEL = os.getenv("GROQ_MODEL", "qwen/qwen3.8-27b")
+
 
 def extract_json(text: str):
     # Remove <think>...</think>
@@ -45,7 +48,7 @@ def analyze_job(job_text: str) -> dict:
     """
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.8-27b",
+        model=MODEL,
         messages=[
             {"role": "system", "content": "You extract structured job data."},
             {"role": "user", "content": prompt}
@@ -94,7 +97,7 @@ def analyze_cv(cv_text: str, job_text: str) -> dict:
     """
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.8-27b",
+        model=MODEL,
         messages=[
             {"role": "system", "content": "You are a professional resume optimizer."},
             {"role": "user", "content": prompt}
@@ -128,7 +131,7 @@ def improve_cover_letter(cl_text: str, job_text: str) -> dict:
     """
 
     response = client.chat.completions.create(
-        model="qwen/qwen3.8-27b",
+        model=MODEL,
         messages=[
             {"role": "system", "content": "You improve cover letters professionally."},
             {"role": "user", "content": prompt}

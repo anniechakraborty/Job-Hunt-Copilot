@@ -1,5 +1,6 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+from groq import RateLimitError
 from parsers.file_parser import parse_file
 from parsers.job_parser import JobPageError, parse_job_url
 from services.pipeline import run_pipeline
@@ -41,6 +42,13 @@ def analyze_cv():
             "status": "success",
             "result": result
         })
+
+    except RateLimitError as e:
+        print("Groq rate limit:", e)
+        return jsonify({
+            "status": "error",
+            "message": "The AI service is at its usage limit right now. Wait a minute and try again."
+        }), 429
 
     except Exception as e:
         return jsonify({
