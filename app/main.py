@@ -91,44 +91,44 @@ def parse_job_url(url):
 def analyze_application(cv_text, cover_text, job_text):
 
     prompt = f"""
-You are an expert resume and cover letter optimizer.
+        You are an expert resume and cover letter optimizer.
 
-CV:
-\"\"\"{cv_text}\"\"\"
+        CV:
+        \"\"\"{cv_text}\"\"\"
 
-Cover Letter:
-\"\"\"{cover_text}\"\"\"
+        Cover Letter:
+        \"\"\"{cover_text}\"\"\"
 
-Job Description:
-\"\"\"{job_text}\"\"\"
+        Job Description:
+        \"\"\"{job_text}\"\"\"
 
-Return ONLY JSON:
-{{
-  "match_score": "0-100",
-  "cv_analysis": {{
-    "missing_keywords": [],
-    "skills_to_add": [],
-    "experience_improvements": [],
-    "ats_tips": []
-  }},
-  "cover_letter_analysis": {{
-    "issues": [],
-    "improvements": [],
-    "rewritten_cover_letter": ""
-  }},
-  "job_alignment": {{
-    "strengths": [],
-    "gaps": [],
-    "recommendations": []
-  }},
-  "general_feedback": []
-}}
+        Return ONLY JSON:
+        {{
+        "match_score": "0-100",
+        "cv_analysis": {{
+            "missing_keywords": [],
+            "skills_to_add": [],
+            "experience_improvements": [],
+            "ats_tips": []
+        }},
+        "cover_letter_analysis": {{
+            "issues": [],
+            "improvements": [],
+            "rewritten_cover_letter": ""
+        }},
+        "job_alignment": {{
+            "strengths": [],
+            "gaps": [],
+            "recommendations": []
+        }},
+        "general_feedback": []
+        }}
 
-Be precise and job-specific.
-"""
+        Be precise and job-specific.
+    """
 
     response = client.chat.completions.create(
-        model="qwen/qwen3-32b",
+        model="qwen/qwen3.8-27b",
         messages=[
             {"role": "system", "content": "You are a career optimization AI."},
             {"role": "user", "content": prompt}
