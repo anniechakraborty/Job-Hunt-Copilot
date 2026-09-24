@@ -18,7 +18,7 @@ export default function App() {
   const [screen, setScreen] = useState("form"); // "form" | "analyzing" | "results"
   const [stage, setStage] = useState(0);
   const [result, setResult] = useState(null);
-  const [error, setError] = useState("");
+  const [error, setError] = useState(null); // { message, field? }
   const requestRef = useRef(null);
 
   const job = parseJobUrl(url);
@@ -40,7 +40,7 @@ export default function App() {
 
     const controller = new AbortController();
     requestRef.current = controller;
-    setError("");
+    setError(null);
     setStage(0);
     setScreen("analyzing");
 
@@ -50,9 +50,14 @@ export default function App() {
       setScreen("results");
     } catch (err) {
       if (controller.signal.aborted) return;
-      setError(err.message);
+      setError({ message: err.message, field: err.field });
       setScreen("form");
     }
+  };
+
+  const changeUrl = (value) => {
+    setUrl(value);
+    if (error?.field === "url") setError(null);
   };
 
   const cancel = () => {
@@ -83,7 +88,7 @@ export default function App() {
           coverLetter={coverLetter}
           onCoverLetterChange={setCoverLetter}
           url={url}
-          onUrlChange={setUrl}
+          onUrlChange={changeUrl}
           job={job}
           error={error}
           onAnalyze={analyze}

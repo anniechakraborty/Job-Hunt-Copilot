@@ -5,9 +5,13 @@ const KNOWN_SOURCES = [
   ["indeed.com", "Indeed"],
   ["myworkdayjobs.com", "Workday"],
   ["stepstone.de", "StepStone"],
+  ["xing.com", "Xing"],
 ];
 
-// Returns { status: "empty" | "invalid" } or { status: "valid", url, host, source }.
+// Sites that usually block the backend from reading their job pages
+const BLOCKED_SOURCES = ["LinkedIn"];
+
+// Returns { status: "empty" | "invalid" } or { status: "valid", url, host, source, blocked }.
 export function parseJobUrl(value) {
   const raw = value.trim();
   if (!raw) return { status: "empty" };
@@ -21,7 +25,8 @@ export function parseJobUrl(value) {
     const known = KNOWN_SOURCES.find(
       ([domain]) => host === domain || host.endsWith(`.${domain}`)
     );
-    return { status: "valid", url: parsed.href, host, source: known ? known[1] : host };
+    const source = known ? known[1] : host;
+    return { status: "valid", url: parsed.href, host, source, blocked: BLOCKED_SOURCES.includes(source) };
   } catch {
     return { status: "invalid" };
   }

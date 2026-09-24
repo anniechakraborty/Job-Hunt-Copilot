@@ -1,0 +1,14 @@
+# Backend deploy on Render (free web service). GROQ_API_KEY is entered in the Render UI.
+services:
+  - type: web
+    name: job-hunt-copilot-api
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    # The analysis makes three LLM calls (~30s); gunicorn's default worker timeout is 30s
+    startCommand: gunicorn --chdir app app:app --timeout 120
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.12.7
+      - key: GROQ_API_KEY
+        sync: false

@@ -1,7 +1,7 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 from parsers.file_parser import parse_file
-from parsers.job_parser import parse_job_url
+from parsers.job_parser import JobPageError, parse_job_url
 from services.pipeline import run_pipeline
 
 app = Flask(__name__)
@@ -22,9 +22,18 @@ def analyze_cv():
         cover_file = request.files["cover_letter"]
         url = request.form["url"]
 
+        # Read the job page first: it's the step most likely to fail
+        try:
+            job_text = parse_job_url(url)
+        except JobPageError as e:
+            return jsonify({
+                "status": "error",
+                "field": "url",
+                "message": str(e)
+            }), 422
+
         cv_text = parse_file(cv_file)
         cover_text = parse_file(cover_file)
-        job_text = parse_job_url(url)
 
         result = run_pipeline(cv_text, cover_text, job_text)
         # print(result)

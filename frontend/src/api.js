@@ -13,11 +13,15 @@ export async function analyzeApplication({ cv, coverLetter, url }, signal) {
     return res.data.result;
   } catch (err) {
     if (axios.isCancel(err)) throw err;
-    const message = err.response?.data?.message || err.response?.data?.error;
-    throw new Error(
-      message ||
+    const data = err.response?.data;
+    const error = new Error(
+      data?.message ||
+        data?.error ||
         "We couldn’t reach the analysis service. Check that the backend is running and try again.",
       { cause: err }
     );
+    // Which input the error is about (e.g. "url"), so the form can show it in place
+    error.field = data?.field;
+    throw error;
   }
 }

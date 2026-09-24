@@ -290,14 +290,31 @@
   font-weight: 600;
 }
 
+.source-badge.is-warning {
+  background: var(--warning-tint);
+  color: var(--warning);
+}
+
 .field-hint {
+  display: flex;
+  gap: 8px;
   font-size: 14px;
   font-weight: 500;
+  line-height: 1.45;
   color: var(--muted);
+}
+
+.field-hint svg {
+  flex-shrink: 0;
+  margin-top: 1px;
 }
 
 .field-hint.is-error {
   color: var(--danger);
+}
+
+.field-hint.is-warning {
+  color: var(--warning);
 }
 
 /* ---------------- SUMMARY ---------------- */

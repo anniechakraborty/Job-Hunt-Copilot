@@ -17,6 +17,7 @@ export default function ApplicationForm({
   error,
   onAnalyze,
 }) {
+  const urlError = error?.field === "url" ? error.message : "";
   const jobReady = job.status === "valid";
   const checklist = [
     { label: "CV", detail: cv ? cv.name : "Not added yet", done: !!cv },
@@ -66,12 +67,12 @@ export default function ApplicationForm({
 
           <Step
             number="03"
-            done={jobReady}
+            done={jobReady && !urlError}
             title="The job posting"
             titleFor={JOB_URL_ID}
-            description="Paste the link. We pull the requirements, skills and languages from the page."
+            description="Paste the link from the company’s career page or a job board. We pull the requirements, skills and languages from it."
           >
-            <JobUrlField id={JOB_URL_ID} value={url} job={job} onChange={onUrlChange} />
+            <JobUrlField id={JOB_URL_ID} value={url} job={job} error={urlError} onChange={onUrlChange} />
           </Step>
         </div>
 
@@ -113,7 +114,7 @@ export default function ApplicationForm({
           {error && (
             <p role="alert" className="summary-error">
               <Icon name="alert" size={18} />
-              {error}
+              {urlError ? "We couldn’t read the job link. See step 3 for what to try instead." : error.message}
             </p>
           )}
 
