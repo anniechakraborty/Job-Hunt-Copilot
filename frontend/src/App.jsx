@@ -3,6 +3,7 @@ import Header from "./components/Header";
 import ApplicationForm from "./components/ApplicationForm";
 import AnalyzingView from "./components/AnalyzingView";
 import ResultsView from "./components/results/ResultsView";
+import HowItWorks from "./components/HowItWorks";
 import Icon from "./components/Icon";
 import { analyzeApplication } from "./api";
 import { parseJobUrl } from "./lib/jobUrl";
@@ -15,7 +16,7 @@ export default function App() {
   const [cv, setCv] = useState(null);
   const [coverLetter, setCoverLetter] = useState(null);
   const [url, setUrl] = useState("");
-  const [screen, setScreen] = useState("form"); // "form" | "analyzing" | "results"
+  const [screen, setScreen] = useState("form"); // "form" | "analyzing" | "results" | "guide"
   const [stage, setStage] = useState(0);
   const [result, setResult] = useState(null);
   const [error, setError] = useState(null); // { message, field? }
@@ -68,6 +69,17 @@ export default function App() {
   return (
     <div className="app">
       <Header>
+        {screen === "form" && (
+          <button type="button" className="btn-outline" onClick={() => setScreen("guide")}>
+            How it works
+          </button>
+        )}
+        {screen === "guide" && (
+          <button type="button" className="btn-outline" onClick={() => setScreen("form")}>
+            <Icon name="arrowLeft" size={18} />
+            Back<span className="hide-on-phone"> to the app</span>
+          </button>
+        )}
         {screen === "analyzing" && (
           <button type="button" className="btn-outline" onClick={cancel}>
             Cancel
@@ -92,8 +104,10 @@ export default function App() {
           job={job}
           error={error}
           onAnalyze={analyze}
+          onShowGuide={() => setScreen("guide")}
         />
       )}
+      {screen === "guide" && <HowItWorks onStart={() => setScreen("form")} />}
       {screen === "analyzing" && <AnalyzingView stage={stage} source={job.source} />}
       {screen === "results" && <ResultsView result={result} source={job.source} />}
     </div>

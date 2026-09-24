@@ -131,6 +131,7 @@ a:hover {
   font-size: 21px;
   font-weight: 600;
   letter-spacing: -0.3px;
+  white-space: nowrap;
 }
 
 .page {
@@ -276,6 +277,10 @@ a:hover {
 
   .brand-name {
     font-size: 18px;
+  }
+
+  .hide-on-phone {
+    display: none;
   }
 
   .page {

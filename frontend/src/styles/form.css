@@ -447,6 +447,26 @@
   margin-top: 1px;
 }
 
+.summary-error-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.summary-error-link {
+  align-self: flex-start;
+  min-height: 32px;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
 .divider {
   height: 1px;
   background: var(--line);

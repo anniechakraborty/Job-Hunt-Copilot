@@ -24,6 +24,36 @@ The system then:
 
 ---
 
+## 📸 How It Works
+
+A worked example with sample files for a Frontend Engineer role. The same walkthrough is in the app under **How it works**.
+
+**1. Add your CV, cover letter and the job link.** Each step checks off as you fill it in, and the Analyze button unlocks when all three are in.
+
+![The form with a CV and cover letter attached and a StepStone job link, ready to analyze](frontend/public/how-it-works/01-add-files.png)
+
+**2. Give it about 30 seconds.** Three AI passes run one after another: reading the job posting, scoring the CV, then rewriting the cover letter.
+
+![The analyzing screen on step 2 of 3](frontend/public/how-it-works/02-analyzing.png)
+
+**3. See how well you match.** The match score and the job's required skills, with the ones missing from the CV marked.
+
+![Results with a 68% match score and the required skills](frontend/public/how-it-works/03-results.png)
+
+**4. Fix your CV.** Keywords to work in, ATS tips, and before-and-after rewrites of experience bullets.
+
+![The CV fixes tab](frontend/public/how-it-works/04-cv-fixes.png)
+
+**5. Use the rewritten cover letter.** Copy it in one click and see what changed.
+
+![The cover letter tab](frontend/public/how-it-works/05-cover-letter.png)
+
+**6. Check the job details.** Responsibilities, tools, and the role's level, location and languages.
+
+![The job details tab](frontend/public/how-it-works/06-job-details.png)
+
+---
+
 ## 🧠 Key Features
 
 ### 📄 CV Analysis

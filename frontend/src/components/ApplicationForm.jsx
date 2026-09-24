@@ -16,6 +16,7 @@ export default function ApplicationForm({
   job,
   error,
   onAnalyze,
+  onShowGuide,
 }) {
   const urlError = error?.field === "url" ? error.message : "";
   const jobReady = job.status === "valid";
@@ -112,10 +113,21 @@ export default function ApplicationForm({
           </p>
 
           {error && (
-            <p role="alert" className="summary-error">
+            <div role="alert" className="summary-error">
               <Icon name="alert" size={18} />
-              {urlError ? "We couldn’t read the job link. See step 3 for what to try instead." : error.message}
-            </p>
+              <div className="summary-error-text">
+                <p>
+                  {urlError
+                    ? "We couldn’t read the job link. See step 3 for what to try instead."
+                    : error.message}
+                </p>
+                {!urlError && (
+                  <button type="button" className="summary-error-link" onClick={onShowGuide}>
+                    See a worked example of the results
+                  </button>
+                )}
+              </div>
+            </div>
           )}
 
           <div className="divider" />
